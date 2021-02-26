@@ -10,24 +10,24 @@ Ergebnisse = []
 Counter = 1
 LängeErhöhtSicherheit = 0
 KomplexitätErhöhtSicherheit = 0
-Kombinationen = 1
+Zeichen = 1
 Länge = 100
 
 for Counter in range(1,1001):
     Counter = Counter + 1
-    Kombinationen = random.randint(1,100)
+    Zeichen = random.randint(1,100)
     Länge = random.randint(1,100)
-    Ergebnisse.append(Kombinationen)
+    Ergebnisse.append(Zeichen)
     Ergebnisse.append(Länge)
     
-    if ((Kombinationen+1)**Länge) <= (Kombinationen**(Länge+1)):
+    if ((Zeichen+1)**Länge) <= (Zeichen**(Länge+1)):
         LängeErhöhtSicherheit = LängeErhöhtSicherheit + 1
         Ergebnisse.append("Verlängerung")
     else:
         KomplexitätErhöhtSicherheit = KomplexitätErhöhtSicherheit + 1
         Ergebnisse.append("Komplexität")    
 
-print("Legende: [Anzahl Kombinationen, Passwortlänge, Beste Möglichkeit der Sicherheitserhöhung]")
+print("Legende: [Anzahl Zeichen, Passwortlänge, Beste Möglichkeit der Sicherheitserhöhung]")
 print(" ")
 print(Ergebnisse)
 print(" ")
