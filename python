@@ -1,0 +1,34 @@
+"""
+Dieses Programm dient dazu, zu errechnen, in welchen Fällen ein Passwort durch die Erhöhung der Passwortlänge 
+sicherer (oder gleichermaßen sicherer) wird als durch die Erhöhung der Komplexität des Passworts 
+(sprich: der Anzahl der verwendbaren Zeichen pro Ziffer)
+"""
+
+import random
+
+Ergebnisse = []
+Counter = 1
+LängeErhöhtSicherheit = 0
+KomplexitätErhöhtSicherheit = 0
+Kombinationen = 1
+Länge = 100
+
+for Counter in range(1,1001):
+    Counter = Counter + 1
+    Kombinationen = random.randint(1,100)
+    Länge = random.randint(1,100)
+    Ergebnisse.append(Kombinationen)
+    Ergebnisse.append(Länge)
+    
+    if ((Kombinationen+1)**Länge) <= (Kombinationen**(Länge+1)):
+        LängeErhöhtSicherheit = LängeErhöhtSicherheit + 1
+        Ergebnisse.append("Verlängerung")
+    else:
+        KomplexitätErhöhtSicherheit = KomplexitätErhöhtSicherheit + 1
+        Ergebnisse.append("Komplexität")    
+
+print("Legende: [Anzahl Kombinationen, Passwortlänge, Beste Möglichkeit der Sicherheitserhöhung]")
+print(" ")
+print(Ergebnisse)
+print(" ")
+print("In " + str(LängeErhöhtSicherheit) + " von " + str(LängeErhöhtSicherheit+KomplexitätErhöhtSicherheit) + " Fällen wurde die Passwortsicherheit durch die Verlängerung des Passwortes mehr (oder gleichermaßen) erhöht als durch die Erhöhung der Komplexität.")
