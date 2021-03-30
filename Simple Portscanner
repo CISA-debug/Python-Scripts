@@ -1,0 +1,69 @@
+import sys
+import socket
+from datetime import datetime
+
+target = input("Hostname oder IP? ")
+ziel = socket.gethostbyname(target)
+portstart = int(input("Welche Ports sollen gescannt werden? Anfangsport: "))
+portend = int(input("Endport: "))
+typ = input("Sollen nur die offenen Ports oder alle Ports aufgelistet werden? (Bitte 'a' für alle Ports oder 'o' für offene Ports antworten) " )
+while typ not in ["a", "A", "o", "O"]:
+    print("Bitte mit 'a' oder 'o' antworten")
+    typ= input("Sollen nur die offenen Ports oder alle Ports aufgelistet werden? (Bitte 'a' für alle Ports oder 'o' für offene Ports antworten) " )
+
+#Banner
+print("-"*50)
+print("Ziel wird gescannt (Ports", portstart, " bis ", portend, "): ", ziel)
+starttime = datetime.now()
+print("Startzeit: ", str(datetime.now()))
+print("-"*50)
+
+#Funktion für Portscan mit Auflistung aller Ports
+def portscan_all():
+    for port in range(portstart, portend+1):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+        result = s.connect_ex((ziel, port))
+        if(result == 0):
+            print("Port ", str(port), " ist offen!")
+        else:
+            print("Port ", str(port), " ist geschlossen!")
+        s.close
+    endtime = datetime.now()
+    print("-"*50)
+    print("Scan abgeschlossen. Endzeit: ", str(datetime.now()))
+    print("Dauer: ", endtime-starttime)
+    print("-"*50)
+
+#Funktion für Portscan mit Auflistung nur der offenen Ports
+def portscan_openonly():
+    for port in range(portstart, portend+1):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+        result = s.connect_ex((ziel, port))
+        if(result == 0):
+            print("Port ", str(port), " ist offen!")
+        s.close
+    endtime = datetime.now()
+    print("-"*50)
+    print("Scan abgeschlossen. Endzeit: ", str(datetime.now()))
+    print("Dauer: ", endtime-starttime)
+    print("-"*50)
+
+try: 
+    if typ in ["a", "A"]:
+        portscan_all()
+    elif typ in ["o", "O"]: 
+        portscan_openonly()
+
+except KeyboardInterrupt:
+    print("\nProgramm wird beendet.")
+    sys.exit()
+
+except socket.gaierror:
+    print("Hostname konnte nicht aufgelöst werden.")
+    sys.exit()
+
+except socket.error:
+    print("Es konnte keine Verbindung zum Server aufgebaut werden.")
+    sys.exit()
