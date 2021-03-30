@@ -1,0 +1,34 @@
+import numpy #for arrays
+
+# LISTEN -> praktisch
+
+list1 = [1, 2, 3]
+# list2 = list1 + 1 #-> TypeError: can only concatenate list (not "int") to list
+# print(list2)
+print(list1) # -> [1, 2, 3]
+
+# ARRAYS -> gut zum Rechnen; import nötig
+
+array1 = numpy.array([1, 2, 3])
+array2 = array1 + 2
+print(array2) #-> [3 4 5]
+
+# TUPEL -> nicht veränderbar
+
+tupel1 = (1, 2, 3)
+print(tupel1) #-> (1, 2, 3)
+# tupel1[1] = 5 #-> TypeError: 'tuple' object does not support item assignment 
+print(tupel1[1]) #-> 2
+
+# DICTIONARIES -> keys and values
+
+dict1 = {"key1":"value1" , "key2":"value2"}
+print(dict1["key1"]) #-> value1
+print(dict1) #-> {'key1': 'value1', 'key2': 'value2'}
+for key, value in dict1.items():
+    if value == "value2":
+        print(key) #-> key2
+dict1["key3"] = "value3"
+print(dict1) #-> {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+dict1.popitem()
+print(dict1) #-> {'key1': 'value1', 'key2': 'value2'}
