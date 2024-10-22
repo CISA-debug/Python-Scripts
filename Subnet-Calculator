@@ -1,0 +1,38 @@
+import ipaddress
+
+def cidr_to_ips(cidr):
+    try:
+        network = ipaddress.ip_network(cidr, strict=False)
+        return [str(ip) for ip in network]
+    except ValueError as e:
+        print(f"Ungültiger CIDR-Bereich: {cidr} - {e}")
+        return []
+
+def main(cidr_file):
+    try:
+        with open(cidr_file, 'r') as file:
+            cidr_ranges = file.readlines()
+    except FileNotFoundError:
+        print(f"Datei {cidr_file} nicht gefunden!")
+        return
+
+    # Gib alle CIDR-Bereiche einmal am Anfang aus
+    print("Verarbeitete CIDR-Bereiche:")
+    for cidr in cidr_ranges:
+        print(cidr.strip())
+    print("-----------------")
+    
+    # Verarbeite die CIDR-Bereiche und gib die IP-Adressen aus
+    for cidr in cidr_ranges:
+        cidr = cidr.strip()
+        if cidr:
+            ips = cidr_to_ips(cidr)
+            for ip in ips:
+                print(f"{ip}")
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) != 2:
+        print("Bitte geben Sie eine Datei mit CIDR-Ranges als Parameter an.")
+    else:
+        main(sys.argv[1])
